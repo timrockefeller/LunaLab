@@ -30,6 +30,25 @@ function(IK_UnityArgs)
     set(${ARGV0} ${ARGLIST} PARENT_SCOPE)
 endfunction(IK_UnityArgs)
 
+function(IK_GlobGroupSrcs)
+	cmake_parse_arguments("ARG" "" "RST" "PATHS" ${ARGN})
+	set(SOURCES "")
+	foreach(path ${ARG_PATHS})
+		file(GLOB_RECURSE pathSources
+			"${path}/*.h"
+			"${path}/*.hpp"
+			"${path}/*.inl"
+			"${path}/*.c"
+			"${path}/*.cc"
+			"${path}/*.cpp"
+			"${path}/*.cxx"
+		)
+		list(APPEND SOURCES ${pathSources})
+    endforeach()
+    IK_UnityArgs(SOURCES ${SOURCES})
+	set(${ARG_RST} ${SOURCES} PARENT_SCOPE)
+endfunction()
+
 ### Setup Target
 ##  TODO setup target with less options, seperate by extensions
 ## 
