@@ -1,16 +1,13 @@
 #pragma once
 #include <Common/Common.h>
-#include <string>
 #include <GLFW/glfw3.h>
 #include <functional>
+#include <string>
 namespace LUNA {
 class Glfw : public KTKR::Singleton<Glfw> {
    public:
     //static Glfw* getInstance();
     void Init(size_t width = 800, size_t height = 600, const std::string& title = "Title");
-
-    Glfw();
-    ~Glfw();
 
     // void Run(KTKR::OpQueue* opList);
     // void Run(KTKR::Ptr<KTKR::OpQueue>& opList);
@@ -22,6 +19,10 @@ class Glfw : public KTKR::Singleton<Glfw> {
 
     const std::function<void()> _startOp;
     const std::function<void()> _endOp;
+
+   protected:
+    Glfw();
+    ~Glfw();
 
    private:
     float lastTime;
