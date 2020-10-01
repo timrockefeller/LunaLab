@@ -1,5 +1,5 @@
 ## For main extry file project
-set(MODE "EXE")
+set(MODE "LIB")
 set(TARGET_NAME "LunaFramework")
 IK_GlobGroupSrcs(RST STR_TARGET_SOURCES PATHS
     ${CMAKE_CURRENT_SOURCE_DIR}
