@@ -14,15 +14,13 @@ class Glfw : public KTKR::Singleton<Glfw> {
     void CloseWindow();
     void Terminate();
     GLFWwindow* getWindow();
-
+    void RunDemo();
     float deltaTime;
 
     const std::function<void()> _startOp;
     const std::function<void()> _endOp;
-
-   protected:
-    Glfw();
-    ~Glfw();
+    Glfw() = default;
+    ~Glfw() = default;
 
    private:
     float lastTime;

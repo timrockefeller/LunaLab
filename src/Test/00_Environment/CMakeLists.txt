@@ -9,6 +9,7 @@ IK_UnityArgs(STR_TARGET_LIBS
     # libs
     glfw3
     glad
-    LunaFrameWork
+    imgui
+    LunaFramework
 )
 IK_SetupProject(${MODE} ${TARGET_NAME} ${STR_TARGET_SOURCES} ${STR_TARGET_LIBS})

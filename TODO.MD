@@ -2,9 +2,10 @@
 
 Milestone
   - [ ] **Draw Triangle** ⚠
+  - [ ] impl opengl lib
 
 201002
-  - [ ] 导入glad、imgui
+  - [x] 导入glad、imgui
 
 201001
   - [x] 配置框架与三方库
@@ -14,7 +15,7 @@ Milestone
 
 ### Such A Huge Challenge ...
 
-- [ ] GUI
+- [x] GUI
   [ocornut/imgui](https://github.com/ocornut/imgui)
 - [ ] Editor
   - [ ] Inspector
