@@ -4,8 +4,11 @@ using namespace KTKR;
 using namespace LUNA;
 using namespace std;
 int main() {
-    Glfw::getInstance()->Init(1920, 1080, "Luna Test");
+    if(!Glfw::getInstance()->Init(1920, 1080, "Luna Test"))
+        return 1;
     
+    // TODO Loop
+
 
     return 0;
 }

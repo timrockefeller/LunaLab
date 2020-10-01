@@ -7,8 +7,9 @@ IK_GlobGroupSrcs(RST STR_TARGET_SOURCES PATHS
 )
 IK_UnityArgs(STR_TARGET_LIBS
     # libs
-    glfw3.lib
+    glfw3
     glad
-    opengl32.lib
+    imgui
+    opengl32
 )
 IK_SetupProject(${MODE} ${TARGET_NAME} ${STR_TARGET_SOURCES} ${STR_TARGET_LIBS})
