@@ -27,7 +27,7 @@ function(IK_UnityArgs)
             math(EXPR IK_INDEX "${IK_INDEX} + 1")  
         endwhile()
     endif()
-    set(${ARGV0} ARGLIST PARENT_SCOPE)
+    set(${ARGV0} ${ARGLIST} PARENT_SCOPE)
 endfunction(IK_UnityArgs)
 
 ### Setup Target
