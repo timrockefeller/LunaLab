@@ -3,3 +3,6 @@ build
 
 # Default target folder
 bin
+
+# Developing Trash
+.toolkit
