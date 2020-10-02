@@ -4,7 +4,7 @@ using namespace KTKR;
 File::File(const string& fileName, Mode mode) {
     this->fileName = fileName;
     this->mode = mode;
-    pF = fopen(fileName.c_str(), ModeToStr(mode).c_str());
+    fopen_s(&pF, fileName.c_str(), ModeToStr(mode).c_str());
     if (pF == NULL)
         fprintf(stderr, "%s open error\n", fileName.c_str());
 }
