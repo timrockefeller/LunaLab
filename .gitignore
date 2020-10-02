@@ -6,3 +6,7 @@ bin
 
 # Developing Trash
 .toolkit
+
+# 3rd Library
+include/glm
+include/assimp
