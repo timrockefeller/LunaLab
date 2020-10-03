@@ -9,7 +9,7 @@ EventListener* EventListener::bind(size_t event,
     if (listenerList.find(event) == listenerList.end()) {
         OpQueue* opq = new OpQueue();
         listenerList[event] =
-            std::shared_ptr<OpQueue>(opq, [&](OpQueue* op_) { delete op_; });
+            Ptr<OpQueue>(opq, [&](OpQueue* op_) { delete op_; });
     }
     listenerList[event]->operator<<(op);
     return this;

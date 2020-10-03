@@ -2,7 +2,10 @@
 
 Milestone
   - [ ] **Draw Triangle** ⚠
-  - [ ] impl opengl lib
+  - [x] impl opengl lib
+
+201003
+  - [ ] 设计配置工作流
 
 201002
   - [x] 导入glad、imgui
