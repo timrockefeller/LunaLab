@@ -1,5 +1,5 @@
-#include <glad/glad.h>
 #include <Editor/Glfw.h>
+#include <glad/glad.h>
 #include <imgui/imgui.h>
 #include <imgui/imgui_impl_glfw.h>
 #include <imgui/imgui_impl_opengl3.h>
@@ -120,7 +120,7 @@ void Glfw::RunDemo() {
     bool show_demo_window = true;
     bool show_another_window = false;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-    // TODO Loop
+    // Loop
     while (!glfwWindowShouldClose(Glfw::getInstance()->getWindow())) {
         // Poll and handle events (inputs, window resize, etc.)
         // You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to tell if dear imgui wants to use your inputs.
@@ -189,6 +189,18 @@ void Glfw::RunDemo() {
 
     glfwDestroyWindow(Glfw::getInstance()->getWindow());
     glfwTerminate();
+}
+
+void Glfw::Run(KTKR::OpQueue* opList) {
+    while (opList->isHold() && !glfwWindowShouldClose(window))
+        opList->Run();
+    Terminate();
+}
+
+void Glfw::Run(KTKR::Ptr<KTKR::OpQueue>& opList) {
+    while (opList->isHold() && !glfwWindowShouldClose(window))
+        opList->Run();
+    Terminate();
 }
 
 void Glfw::updateViewport(GLFWwindow* window, int width, int height) {

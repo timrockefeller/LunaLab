@@ -9,8 +9,8 @@ class Glfw : public KTKR::Singleton<Glfw> {
     //static Glfw* getInstance();
     bool Init(size_t width = 800, size_t height = 600, const std::string& title = "Title");
 
-    // void Run(KTKR::OpQueue* opList);
-    // void Run(KTKR::Ptr<KTKR::OpQueue>& opList);
+    void Run(KTKR::OpQueue* opList);
+    void Run(KTKR::Ptr<KTKR::OpQueue>& opList);
     void CloseWindow();
     void Terminate();
     GLFWwindow* getWindow();
