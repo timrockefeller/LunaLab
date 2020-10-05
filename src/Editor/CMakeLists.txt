@@ -4,6 +4,8 @@ set(TARGET_NAME "LunaFramework")
 IK_GlobGroupSrcs(RST STR_TARGET_SOURCES PATHS
     ${CMAKE_CURRENT_SOURCE_DIR}
     "${PROJECT_SOURCE_DIR}/include/Editor"
+    "${PROJECT_SOURCE_DIR}/include/Editor/Scene"
+    "${PROJECT_SOURCE_DIR}/include/Editor/UI"
 )
 IK_UnityArgs(STR_TARGET_LIBS
     # libs

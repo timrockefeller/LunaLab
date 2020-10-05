@@ -5,7 +5,7 @@ Milestone
   - [x] impl opengl lib
 
 201003
-  - [ ] 设计配置工作流
+  - [ ] 设计配置工作流 - 场景模块需先完成
 
 201002
   - [x] 导入glad、imgui
@@ -14,7 +14,9 @@ Milestone
   - [x] 配置框架与三方库
 
 
+### 已知问题与解决方案
 
+- 场景管理可使用树，以一个根节点作为场景索引点
 
 ### Such A Huge Challenge ...
 
