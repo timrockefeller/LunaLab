@@ -45,7 +45,7 @@ class SceneObject : public KTKR::Node<SceneObject> {
     bool DetachComponent(){
         auto tarcmp = components.find(typeid(T));
         if(tarcmp == components.end()) return false;
-        // tarcmp->second->wSceneObject.reset();
+        tarcmp->second->wSceneObject.reset();
         return true;
     }
     bool DetachComponent(KTKR::Ptr<Component> component);
