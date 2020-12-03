@@ -2,6 +2,7 @@
 #pragma once
 #include <Common/Node.h>
 #include <Common/TypeMap.h>
+#include "Component.h"
 #include <string>
 namespace LUNA {
 class Component;
@@ -68,7 +69,7 @@ class SceneObject : public KTKR::Node<SceneObject> {
             return false;
         if (target->second != component)
             return false;
-        target->second->wSObj.reset();
+        target->second->wSceneObject.reset();
         components.erase(target);
         return true;
     }

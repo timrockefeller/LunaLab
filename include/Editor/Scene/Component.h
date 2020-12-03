@@ -10,6 +10,12 @@ class Component : public KTKR::HeapObj {
         : wSceneObject(sceneObject) {}
     virtual ~Component() = default;
     virtual void LateInit() override;
+    Component(const Component& other)
+        : wSceneObject{other.wSceneObject} {}
+    Component& operator=(const Component& other) {
+        wSceneObject = other.wSceneObject;
+        return *this;
+    }
 
    public:
     const KTKR::WPtr<SceneObject> GetSceneObject() const { return wSceneObject.lock(); }

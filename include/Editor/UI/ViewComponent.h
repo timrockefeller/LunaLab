@@ -12,7 +12,7 @@
 namespace LUNA {
 namespace Editor {
 
-class Component {
+class ViewComponent {
    public:
     short instanceID = 0xFF;
 
@@ -23,8 +23,8 @@ class Component {
     virtual bool Close() = 0;
 
    protected:
-    Component() = default;
-    ~Component() = default;
+    ViewComponent() = default;
+    ~ViewComponent() = default;
 };
 
 }  // namespace Editor

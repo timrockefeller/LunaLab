@@ -2,19 +2,22 @@
     "configurations": [
         {
             "name": "Win32",
+            "includePath": [
+                "${default}",
+                "include",
+                "lib",
+                "d:/Users/tim72/Documents/repo/IKit/include"
+            ],
             "defines": [
                 "_DEBUG",
                 "UNICODE",
                 "_UNICODE"
             ],
             "windowsSdkVersion": "10.0.17763.0",
-            "compilerPath": "cl.exe",
-            "cStandard": "c18",
+            "compilerPath": "D:/Program Files (x86)/Microsoft Visual Studio/VC/Tools/MSVC/14.16.27023/bin/Hostx64/x64/cl.exe",
             "intelliSenseMode": "msvc-x64",
-            "includePath": [
-                "include",
-                "lib"
-            ]
+            "cStandard": "c17",
+            "cppStandard": "c++17"
         }
     ],
     "version": 4
