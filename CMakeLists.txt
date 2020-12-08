@@ -7,6 +7,7 @@ project(${PROJECT_NAME} VERSION ${PROJECT_VERSION} LANGUAGES C CXX)
 
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 include(IKInit)
+include(CPInclude)
 IK_InitProject(${PROJECT_NAME})
 
 message(STATUS "[Project] ${PROJECT_NAME} ${PROJECT_VERSION}")

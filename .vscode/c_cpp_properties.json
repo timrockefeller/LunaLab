@@ -6,7 +6,7 @@
                 "${default}",
                 "include",
                 "lib",
-                "d:/Users/tim72/Documents/repo/IKit/include"
+                "build/_deps/ikit-src/include"
             ],
             "defines": [
                 "_DEBUG",
