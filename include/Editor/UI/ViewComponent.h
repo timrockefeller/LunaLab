@@ -13,17 +13,15 @@ namespace LUNA::Editor {
 
 class ViewComponent {
    public:
+    ViewComponent() = default;
+    virtual ~ViewComponent() = default;
     short instanceID = 0xFF;
 
     // implement these function in every UI module.
-    
-    virtual bool Enter() = 0;
-    virtual bool Draw() = 0;
-    virtual bool Close() = 0;
 
-   protected:
-    ViewComponent() = default;
-    ~ViewComponent() = default;
+    virtual bool Enter() const = 0;
+    virtual bool Draw() const = 0;
+    virtual bool Close() const = 0;
 };
 
 }  // namespace LUNA::Editor
