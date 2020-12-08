@@ -1,7 +1,5 @@
 /*
     COPYRIGHT TO Kitekii 2020
-
-    函数队列，
 */
 #pragma once
 #include <Common/Operation.h>
@@ -31,7 +29,7 @@ class OpQueue {
     std::list<Ptr<Operation>> queue;
 
    private:
-    // 禁用复制与赋值，保证其初始化与执行作用域相同
+    // disable copy and assignment, ensure the object in same scope between init and inject
     OpQueue(const OpQueue&) = delete;
     OpQueue& operator=(const OpQueue&) = delete;
 };
