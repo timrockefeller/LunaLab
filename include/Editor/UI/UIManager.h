@@ -8,19 +8,21 @@ namespace LUNA::Editor {
 
 class UIManager : public KTKR::Singleton<UIManager> {
    private:
-    std::vector<std::unique_ptr<ViewComponent>> viewCmpts;
+    template <typename T>
+    using enable_if_is_viewcomponent_t = std::enable_if_t<std::is_base_of_v<ViewComponent, T>>;
+
+    std::vector<KTKR::UPtr<ViewComponent>> viewCmpts;
 
    public:
-    template <typename T, typename = std::enable_if<std::is_base_of<ViewComponent, T>::value>>
-    bool AddViewComponent(std::unique_ptr<T>&& t) {
+    template <typename T, typename = enable_if_is_viewcomponent_t<T>>
+    void AddViewComponent(KTKR::UPtr<T>&& t) {
         viewCmpts.push_back(std::make_unique<ViewComponent>(static_cast<ViewComponent*>(t.release())));
-        return true;
     }
-    template <typename T, typename = std::enable_if<std::is_base_of<ViewComponent, T>::value>>
-    bool AddViewComponent() {
-        viewCmpts.push_back(std::unique_ptr<ViewComponent>(new T));
-        return true;
+    template <typename T, typename = enable_if_is_viewcomponent_t<T>>
+    void AddViewComponent() {
+        viewCmpts.push_back(KTKR::UPtr<ViewComponent>(new T));
     }
+
     bool InitDemo() {
         AddViewComponent<Inspector>();
         AddViewComponent<DemoWindow>();
