@@ -1,16 +1,15 @@
 #pragma once
 
 #include <Common/Common.h>
-#include <Editor/UI/Component.h>
+#include <Editor/UI/ViewComponent.h>
 
-namespace LUNA {
-namespace Editor {
+namespace LUNA::Editor {
 
-class Inspector : public Component {
+class Inspector : public ViewComponent {
+   public:
     bool Enter() override { return false; }
     bool Draw() override { return false; }
     bool Close() override { return false; }
 };
 
-}  // namespace Editor
-}  // namespace LUNA
+}  // namespace LUNA::Editor

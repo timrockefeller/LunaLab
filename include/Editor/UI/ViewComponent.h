@@ -9,8 +9,7 @@
 #include <imgui/imgui_impl_glfw.h>
 #include <imgui/imgui_impl_opengl3.h>
 
-namespace LUNA {
-namespace Editor {
+namespace LUNA::Editor {
 
 class ViewComponent {
    public:
@@ -27,5 +26,4 @@ class ViewComponent {
     ~ViewComponent() = default;
 };
 
-}  // namespace Editor
-}  // namespace LUNA
+}  // namespace LUNA::Editor

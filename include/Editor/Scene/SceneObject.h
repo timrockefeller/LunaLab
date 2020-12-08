@@ -63,16 +63,7 @@ class SceneObject : public KTKR::Node<SceneObject> {
         tarcmp->second->wSceneObject.reset();
         return true;
     }
-    bool DetachComponent(KTKR::Ptr<Component> component) {
-        auto target = components.find(typeid(*component));
-        if (target == components.end())
-            return false;
-        if (target->second != component)
-            return false;
-        target->second->wSceneObject.reset();
-        components.erase(target);
-        return true;
-    }
+    bool DetachComponent(KTKR::Ptr<Component> component);
 
     template <typename T, typename = enable_if_is_component_t<T>>
     const KTKR::Ptr<T> GetComponentInChildren();
@@ -87,3 +78,5 @@ class SceneObject : public KTKR::Node<SceneObject> {
     std::string name;
 };
 }  // namespace LUNA
+
+#include "detail/SceneObject.inl"
