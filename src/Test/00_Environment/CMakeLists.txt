@@ -1,15 +1,10 @@
-## For main extry file project
-set(MODE "EXE")
-set(TARGET_NAME "example")
-IK_UnityArgs(STR_TARGET_SOURCES
-    # sources, headfiles
-    "main.cpp"
+IK_AddTarget(
+    TEST
+    MODE EXE
+    INC "${PROJECT_SOURCE_DIR}/include"
+    LIB 
+        KTKR::LunaLab_Editor
+        KTKR::LunaLab_lib_imgui
+        glfw3
+        opengl32
 )
-IK_UnityArgs(STR_TARGET_LIBS
-    # libs
-    glfw3
-    glad
-    imgui
-    LunaFramework
-)
-IK_SetupProject(${MODE} ${TARGET_NAME} ${STR_TARGET_SOURCES} ${STR_TARGET_LIBS})
