@@ -3,3 +3,4 @@
 #include "layout/ExposedCamera.h"
 #include "layout/Heirachy.h"
 #include "layout/Inspector.h"
+#include "layout/MenuBar.h"

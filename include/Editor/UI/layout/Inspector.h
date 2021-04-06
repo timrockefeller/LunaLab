@@ -2,7 +2,7 @@
 
 #include <Common/Common.h>
 #include "../ViewComponent.h"
-
+#include <Core/Runtime/GlobalStorage.h>
 namespace LUNA::Editor {
 
 class Inspector : public ViewComponent {
@@ -11,7 +11,7 @@ class Inspector : public ViewComponent {
     virtual bool Draw() const {
         ImGui::Begin("Inspector");
 
-
+        auto c = _GS<float>::getInstance()->Register("rtx",12.7f);
         
         ImGui::End();
         return false;
