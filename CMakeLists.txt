@@ -14,5 +14,12 @@ IK_InitProject(${PROJECT_NAME})
 
 message(STATUS "[Project] ${PROJECT_NAME} ${PROJECT_VERSION}")
 
+include_directories (
+    ${PROJECT_SOURCE_DIR}/include
+)
+link_directories (
+    ${PROJECT_SOURCE_DIR}/lib
+)
+
 IK_AddSubDirsRec(include)
 IK_AddSubDirsRec(src)
