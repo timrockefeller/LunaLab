@@ -6,6 +6,7 @@
 #include <imgui/imgui_impl_glfw.h>
 #include <imgui/imgui_impl_opengl3.h>
 #include <iostream>
+#include <Core/Runtime/GlobalStorage.h>
 using namespace std;
 using namespace LUNA;
 
@@ -139,7 +140,9 @@ void Glfw::RunDemo() {
         int display_w, display_h;
         glfwGetFramebufferSize(Glfw::getInstance()->getWindow(), &display_w, &display_h);
         glViewport(0, 0, display_w, display_h);
-        glClearColor(0.45f, 0.55f, 0.60f, 1.00f);
+        auto clear_color = _GS<ImVec4>::getInstance()->getPtr("clear_color");
+        if(clear_color)
+            glClearColor(clear_color->x, clear_color->y, clear_color->z, clear_color->w);
         glClear(GL_COLOR_BUFFER_BIT);
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
