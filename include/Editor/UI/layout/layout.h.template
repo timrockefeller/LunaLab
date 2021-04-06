@@ -1,3 +1,9 @@
+// Layout Template
+//
+// Modify `{{LayoutName}}` to a class name(filename recommanded).
+
+
+
 #pragma once
 
 #include <Common/Common.h>
@@ -10,7 +16,7 @@ class {{LayoutName}} : public ViewComponent {
     virtual bool Enter() const { return false; }
     virtual bool Draw() const { return false; }
     virtual bool Close() const { return false; }
-    virtual {{LayoutName}} = default;
+    virtual ~{{LayoutName}}() = default;
 };
 
 }  // namespace LUNA::Editor
