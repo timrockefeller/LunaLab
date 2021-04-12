@@ -5,9 +5,9 @@
 namespace LUNA {
 // Common Define
 
-static float DEFAULT_WIDTH = 800.f;
+static float DEFAULT_WIDTH = 1920.f;
 
-static float DEFAULT_HEIGHT = 600.f;
+static float DEFAULT_HEIGHT = 1080.f;
 
 /// event bridge ///
 
@@ -16,8 +16,8 @@ static std::string strMouseScrollX = "mouseScroll_xoffset";
 // mouse scroll y offset
 static std::string strMouseScrollY = "mouseScroll_yoffset";
 // mouse position x offset
-static std::string strMousePosX = "mouseScroll_xoffset";
+static std::string strMousePosX = "mousePosition_xoffset";
 // mouse position y offset
-static std::string strMousePosY = "mouseScroll_yoffset";
+static std::string strMousePosY = "mousePosition_yoffset";
 
 }  // namespace LOGL
