@@ -9,6 +9,6 @@
 
 namespace LUNA {
 class Scene : public KTKR::HeapObj {
-
+    
 };
 }  // namespace LUNA

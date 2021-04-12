@@ -1,7 +1,6 @@
 // impl to a Tree?
 #pragma once
 #include <Common/Node.h>
-#include <Common/TypeMap.h>
 #include "Component.h"
 #include <string>
 namespace LUNA {
@@ -15,7 +14,6 @@ class SceneObject : public KTKR::Node<SceneObject> {
     SceneObject(KTKR::Ptr<SceneObject> parent = nullptr, const std::string& name = "SceneObject")
         : Node(parent), name(name) {}
 
-   protected:
     virtual ~SceneObject() = default;
 
     // component handle
