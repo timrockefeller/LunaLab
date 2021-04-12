@@ -1,5 +1,7 @@
 #include <glad/glad.h>
 // static
+#include <Common/Common.h>
+#include <Core/OpenGL/Common.h>
 #include <Editor/Glfw.h>
 #include <Editor/UI/UIManager.h>
 #include <imgui/imgui.h>
@@ -106,6 +108,79 @@ bool Glfw::Init(size_t width, size_t height, const string &title)
     glViewport(0, 0, static_cast<int>(width), static_cast<int>(height));
     glfwSetFramebufferSizeCallback(window, updateViewport);
 
+    // =================================================
+    // Input Events
+    glfwSetCursorPosCallback(
+        window, [](GLFWwindow *window, double xpos, double ypos) {
+            static float lastX = (float)xpos;
+            static float lastY = (float)ypos;
+
+            static float xoffset;
+            static float yoffset;
+            _GS<float>::getInstance()->Register(strMousePosX, xoffset);
+            _GS<float>::getInstance()->Register(strMousePosY, yoffset);
+            xoffset = (float)xpos - lastX;
+            yoffset = lastY - (float)ypos;
+            lastX = (float)xpos;
+            lastY = (float)ypos;
+            KTKR::EventListener::getInstance()->response(
+                KTKR::EventListener::Event_Type::MOUSE_MOVE);
+        });
+    glfwSetMouseButtonCallback(window, [](GLFWwindow *window, int button, int action, int mods) {
+        if(action == GLFW_PRESS){
+            KTKR::EventListener::getInstance()->response(
+                KTKR::EventListener::Event_Type::MOUSE_PRESS | button);
+                // GLFW_MOUSE_BUTTON_LEFT
+                
+        }else if(action == GLFW_RELEASE){
+            KTKR::EventListener::getInstance()->response(
+                KTKR::EventListener::Event_Type::MOUSE_RELEASE | button);
+        }
+    });
+    glfwSetScrollCallback(
+        window, [](GLFWwindow *window, double xoffset, double yoffset) {
+            _GS<float>::getInstance()->Register(strMouseScrollX,
+                                                (float)xoffset);
+            _GS<float>::getInstance()->Register(strMouseScrollY,
+                                                (float)yoffset);
+            KTKR::EventListener::getInstance()->response(
+                KTKR::EventListener::Event_Type::MOUSE_SCROLL);
+        });
+    glfwSetKeyCallback(window, [](GLFWwindow *window, int key, int scanCode,
+                                  int state, int mods) {
+        size_t kbState =
+            (state == GLFW_PRESS ? KTKR::EventListener::KEYBOARD_PRESS
+                                 : (state == GLFW_REPEAT
+                                        ? KTKR::EventListener::KEYBOARD_REPEAT
+                                        : (state == GLFW_RELEASE
+                                               ? KTKR::EventListener::KEYBOARD_RELEASE
+                                               : 0)));
+        if (kbState != 0)
+            KTKR::EventListener::getInstance()->response(key | kbState);
+        KTKR::EventListener::getInstance()->response(key | KTKR::EventListener::KEYBOARD);
+    });
+
+    // =================================================
+    // Update Processes
+    _startOp = [&]() {
+        int display_w, display_h;
+        glfwGetFramebufferSize(Glfw::getInstance()->getWindow(), &display_w, &display_h);
+        glViewport(0, 0, display_w, display_h);
+        auto clear_color = _GS<ImVec4>::getInstance()->getPtr("clear_color");
+        if (clear_color)
+            glClearColor(clear_color->x, clear_color->y, clear_color->z, clear_color->w);
+        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_DEPTH_BUFFER_BIT);
+
+        float ct = (float)glfwGetTime();
+        deltaTime = ct - lastTime;
+        lastTime = ct;
+    };
+    _endOp = [&]() {
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+    };
+
     return true;
 }
 void Glfw::CloseWindow()
@@ -169,19 +244,27 @@ void Glfw::RunDemo()
 void Glfw::Run(KTKR::OpQueue *opList)
 {
     while (opList->isHold() && !glfwWindowShouldClose(window))
+    {
+        _startOp();
         opList->Run();
+        _endOp();
+    }
     Terminate();
 }
 
 void Glfw::Run(KTKR::Ptr<KTKR::OpQueue> &opList)
 {
     while (opList->isHold() && !glfwWindowShouldClose(window))
+    {
+        _startOp();
         opList->Run();
+        _endOp();
+    }
     Terminate();
 }
 
 void Glfw::updateViewport(GLFWwindow *window, int width, int height)
 {
     glViewport(0, 0, width, height);
-    // EventListener::getInstance()->response(EventListener::WINDOW_ZOOM);
+    // KTKR::EventListener::getInstance()->response(KTKR::EventListener::WINDOW_ZOOM);
 }

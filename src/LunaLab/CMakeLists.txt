@@ -4,6 +4,7 @@ IK_AddTarget(
     LIB 
         KTKR::LunaLab_Basic
         KTKR::LunaLab_Editor
+        KTKR::LunaLab_OpenGL
         KTKR::LunaLab_lib_glad
         KTKR::LunaLab_lib_imgui
         glfw3

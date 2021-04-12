@@ -1,6 +1,7 @@
 #include <Common/Common.h>
 #include <Editor/Glfw.h>
 #include <Editor/UI/UIManager.h>
+#include <Editor/Scene/SceneRenderer.h>
 #include <imgui/imgui.h>
 #include <imgui/imgui_impl_glfw.h>
 #include <imgui/imgui_impl_opengl3.h>
@@ -14,30 +15,29 @@ int main()
         return 1;
 
     Editor::UIManager::getInstance()->InitDemo();
-    
+
+    Demo::CubeMapRenderer::getInstance()->Init();
+
     auto preFrameProc = []() {
-        glfwPollEvents();
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
     };
 
     auto renderFrame = []() {
+        // Scene
+
+        Demo::CubeMapRenderer::getInstance()->Update();
+
+        // GUI
         Editor::UIManager::getInstance()->RunDemo();
-        // Rendering
         ImGui::Render();
+
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     };
 
     auto postFrameProc = []() {
-        int display_w, display_h;
-        glfwGetFramebufferSize(Glfw::getInstance()->getWindow(), &display_w, &display_h);
-        glViewport(0, 0, display_w, display_h);
-        auto clear_color = _GS<ImVec4>::getInstance()->getPtr("clear_color");
-        if (clear_color)
-            glClearColor(clear_color->x, clear_color->y, clear_color->z, clear_color->w);
-        glClear(GL_COLOR_BUFFER_BIT);
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-        glfwSwapBuffers(Glfw::getInstance()->getWindow());
+
     };
 
     OpQueue operations;
