@@ -10,3 +10,12 @@ bin
 # 3rd Library
 include/glm
 include/assimp
+
+**/*.lib
+
+.vscode/*
+
+include/3rdParty/*
+!include/3rdParty/readme.md
+
+assets/pointcloud/**
