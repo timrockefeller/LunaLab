@@ -10,7 +10,7 @@ struct Hasher {
     }
 };
 struct EqualTo {
-    bool operator()(TypeInfoRef a, TypeInfoRef b) {
+    bool operator()(TypeInfoRef a, TypeInfoRef b) const {
         return a.get() == b.get();
     }
 };

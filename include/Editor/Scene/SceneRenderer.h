@@ -93,7 +93,7 @@ namespace LUNA
                     fin >> buff;
                     pointsXYZ.emplace_back(static_cast<float>(buff));
                 }
-                pointVAO = new VAO{&(pointsXYZ[0]), pointsXYZ.size() * sizeof(float), {3,3}};
+                pointVAO = new VAO{&(pointsXYZ[0]), pointsXYZ.size() * sizeof(float), {3, 3}};
                 pointVAO->SetRenderMode(GL_POINTS);
                 pointShader = new Shader{"../assets/shader/vert_point.vs",
                                          "../assets/shader/frag_point.fs"};
@@ -129,13 +129,13 @@ namespace LUNA
                 // =================================================
 
                 glEnable(GL_DEPTH_TEST);
-                glPointSize(5);
             }
             void Update()
             {
 
                 processCameraInput(Glfw::getInstance()->getWindow(), camera,
                                    Glfw::getInstance()->deltaTime);
+                glPointSize(*_GS<int>::getInstance()->getPtr("pointsize"));
                 glEnable(GL_DEPTH_TEST);
                 glm::mat4 model = glm::mat4(1.0f);
                 glm::mat4 view = camera->GetViewMatrix();

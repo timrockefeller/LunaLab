@@ -9,12 +9,13 @@ namespace LUNA::Editor
     class DemoWindow : public ViewComponent
     {
     protected:
-        const ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+        const ImVec4 clear_color = ImVec4(0.15f, 0.15f, 0.15f, 1.00f);
 
     public:
         virtual bool Enter() const
         {
-            _GS<ImVec4>::getInstance()->Register("clear_color", ImVec4(0.45f, 0.55f, 0.60f, 1.00f));
+            _GS<ImVec4>::getInstance()->Register("clear_color", ImVec4(0.15f, 0.15f, 0.15f, 1.00f));
+            _GS<int>::getInstance()->Register("pointsize", 5);
             return false;
         }
         virtual bool Draw() const
@@ -35,7 +36,7 @@ namespace LUNA::Editor
                 ImGui::Checkbox("Demo Window", &show_demo_window); // Edit bools storing our window open/close state
                 ImGui::Checkbox("Another Window", &show_another_window);
 
-                ImGui::SliderFloat("float", &f, 0.0f, 1.0f);             // Edit 1 float using a slider from 0.0f to 1.0f
+                ImGui::SliderInt("width",  _GS<int>::getInstance()->getPtr("pointsize"), 1, 10);                                                  // Edit 1 float using a slider from 0.0f to 1.0f
                 ImGui::ColorEdit3("clear color", (float *)_GS<ImVec4>::getInstance()->getPtr("clear_color")); // Edit 3 floats representing a color
 
                 if (ImGui::Button("Button")) // Buttons return true when clicked (most widgets return true when edited/activated)

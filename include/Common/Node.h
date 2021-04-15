@@ -14,7 +14,7 @@ class Node : public HeapObj {
     void AddChild(Ptr<ImplT> _child) {
         // remove lagency parent
         if (!_child->parent.expired())
-            _child->parent.lock() - DelChild(_child);
+            _child->parent.lock()->DelChild(_child);;
 
         _child->parent = This<ImplT>();
         children.insert(_child);
