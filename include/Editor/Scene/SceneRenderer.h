@@ -3,6 +3,7 @@
 #include <Core/OpenGL/Common.h>
 #include <Core/OpenGL/Camera.h>
 #include <Core/OpenGL/VAO.h>
+#include <Core/OpenGL/Obj/FmtPLY.h>
 #include <Core/OpenGL/Shader.h>
 #include <Core/OpenGL/Texture.h>
 #include "./Scene.h"
@@ -29,9 +30,15 @@ namespace LUNA
             Shader *pointShader;
             bool enableFPS;
 
+            KTKR::Ptr<FmtPLY> ply;
+
         public:
             void Init()
             {
+
+                ply = FmtPLY::create("../assets/pointcloud/06_result_points.ply");
+
+
                 enableFPS = false;
                 camera = new Camera{glm::vec3(0.0f, 0.0f, 3.0f)};
                 camera->DisableFPS();
@@ -174,5 +181,100 @@ namespace LUNA
                     camera->ProcessKeyboard(CAM_RIGHT, deltaTime);
             }
         };
+
+        class PLYRenderer : public KTKR::Singleton<PLYRenderer>
+        {
+       protected:
+            Camera *camera;
+            Shader *plyShader;
+            bool enableFPS;
+
+            KTKR::Ptr<FmtPLY> ply;
+
+        public:
+            void Init()
+            {
+
+                ply = FmtPLY::create("../assets/pointcloud/06_result_points.ply");
+
+
+                enableFPS = false;
+                camera = new Camera{glm::vec3(0.0f, 0.0f, 3.0f)};
+                camera->DisableFPS();
+
+                plyShader = new Shader{"../assets/shader/ply.vs",
+                                         "../assets/shader/ply.fs"};
+                
+                KTKR::EventListener::getInstance()
+                    ->bind(KTKR::EventListener::Event_Type::MOUSE_SCROLL,
+                           [&]() {
+                               if (!enableFPS)
+                                   return;
+                               float *r =
+                                   _GS<float>::getInstance()->getPtr(strMouseScrollY);
+                               if (r)
+                                   camera->ProcessMouseScroll(*r);
+                           })
+                    ->bind(
+                        KTKR::EventListener::Event_Type::MOUSE_MOVE,
+                        [&]() {
+                            if (!enableFPS)
+                                return;
+                            float *xoffset =
+                                      _GS<float>::getInstance()->getPtr(strMousePosX),
+                                  *yoffset =
+                                      _GS<float>::getInstance()->getPtr(strMousePosY);
+                            if (xoffset && yoffset)
+                                camera->ProcessMouseMovement(*xoffset, *yoffset);
+                        })
+                    ->bind(KTKR::EventListener::KEYBOARD_PRESS | GLFW_KEY_ESCAPE,
+                           [&]() { Glfw::getInstance()->CloseWindow(); })
+                    ->bind(KTKR::EventListener::Event_Type::MOUSE_PRESS | GLFW_MOUSE_BUTTON_RIGHT,
+                           [&]() { enableFPS = true; })
+                    ->bind(KTKR::EventListener::Event_Type::MOUSE_RELEASE | GLFW_MOUSE_BUTTON_RIGHT,
+                           [&]() { enableFPS = false; });
+
+                // =================================================
+
+                glEnable(GL_DEPTH_TEST);
+            }
+            void Update()
+            {
+
+                processCameraInput(Glfw::getInstance()->getWindow(), camera,
+                                   Glfw::getInstance()->deltaTime);
+                glPointSize(*_GS<int>::getInstance()->getPtr("pointsize"));
+                glEnable(GL_DEPTH_TEST);
+                glm::mat4 model = glm::mat4(1.0f);
+                glm::mat4 view = camera->GetViewMatrix();
+                glm::mat4 projection = glm::perspective(
+                    glm::radians(camera->GetZoom()),
+                    (float)DEFAULT_WIDTH / (float)DEFAULT_HEIGHT, 0.1f, 100.0f);
+
+                
+                plyShader->Use();
+                plyShader->setMat4f("view", view);
+                plyShader->setMat4f("projection", projection);
+                plyShader->setMat4f("model", model);
+                ply->Draw();
+            }
+
+            void processCameraInput(GLFWwindow *window, Camera *camera, float deltaTime)
+            {
+
+                if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+                    Glfw::getInstance()->CloseWindow();
+
+                if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+                    camera->ProcessKeyboard(CAM_FORWARD, deltaTime);
+                if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+                    camera->ProcessKeyboard(CAM_BACKWARD, deltaTime);
+                if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+                    camera->ProcessKeyboard(CAM_LEFT, deltaTime);
+                if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+                    camera->ProcessKeyboard(CAM_RIGHT, deltaTime);
+            }
+        };
+
     } // namespace LUNA::Demo
 } // namespace LUNA

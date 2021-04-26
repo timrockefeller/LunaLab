@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-
+#include <Common/AlignedChunk.h>
 namespace LUNA
 {
     class VAO
@@ -11,6 +11,8 @@ namespace LUNA
             : ID(ID), isValid(true), pointNum(num) {}
         VAO(void const *data,
             size_t dataSize,
+            const std::vector<unsigned int> &attrLen);
+        VAO(KTKR::AlignedChunk dataSize,
             const std::vector<unsigned int> &attrLen);
         VAO(void const *data,
             unsigned int dataSize,
@@ -26,7 +28,7 @@ namespace LUNA
         bool Draw() const;
         void SetRenderMode(unsigned int);
 
-    private:
+    protected:
         bool GenBindEBO(unsigned int const *index, unsigned int indexSize);
         //------------
         unsigned int attrNum;

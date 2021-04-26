@@ -16,7 +16,7 @@ int main()
 
     Editor::UIManager::getInstance()->InitDemo();
 
-    Demo::CubeMapRenderer::getInstance()->Init();
+    Demo::PLYRenderer::getInstance()->Init();
 
     auto preFrameProc = []() {
         ImGui_ImplOpenGL3_NewFrame();
@@ -27,7 +27,7 @@ int main()
     auto renderFrame = []() {
         // Scene
 
-        Demo::CubeMapRenderer::getInstance()->Update();
+        Demo::PLYRenderer::getInstance()->Update();
 
         // GUI
         Editor::UIManager::getInstance()->RunDemo();

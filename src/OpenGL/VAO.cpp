@@ -3,7 +3,7 @@
 
 using namespace std;
 using namespace LUNA;
-
+using namespace KTKR;
 VAO::VAO(void const *data,
          size_t dataSize,
          const vector<unsigned int> &attrLen)
@@ -39,9 +39,59 @@ VAO::VAO(void const *data,
     mode = GL_TRIANGLES;
 }
 
+VAO::VAO(KTKR::AlignedChunk data,
+         const vector<unsigned int> &attrLen)
+{
+    bool valid = true;
+    if (!data.IsValid() || data.size() == 0 || attrLen.size() == 0)
+        valid = false;
+
+    // check each ele in attr matchs length
+    for (unsigned int i = 0, curattr = 0; i < attrLen.size(); i++)
+    {
+        size_t check = data.layout.lengths[curattr];
+        for (size_t j = 1; j < attrLen[i]; j++)
+            if (check != data.layout.lengths[curattr + j])
+            {
+                valid = false;
+                break;
+            }
+        if (!valid)
+            break;
+        curattr += attrLen[i];
+    }
+
+    if (!valid)
+    {
+        isValid = false;
+        ID = 0;
+        return;
+    }
+
+    glGenVertexArrays(1, &ID);
+    glBindVertexArray(ID);
+    glGenBuffers(1, &VBO);
+
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, data.size() * data.layout.capacity, data.Data(), GL_STATIC_DRAW);
+
+    for (unsigned int i = 0, curattr = 0, curbyte = 0; i < attrLen.size(); i++)
+    {
+
+        glEnableVertexAttribArray(i);
+        glVertexAttribPointer(i, attrLen[i], GL_FLOAT, // TODO dynamic length of type
+                              GL_FALSE,
+                              data.layout.capacity,
+                              (void *)(curbyte));
+        curattr += attrLen[i];
+        curbyte += attrLen[i] * data.layout.lengths[curattr];
+    }
+    glBindVertexArray(0);
+}
+
 VAO::VAO(void const *data,
          unsigned int dataSize,
-         const std::vector<unsigned int> &attrLen,
+         const vector<unsigned int> &attrLen,
          unsigned int const *index,
          unsigned int indexSize)
     : VAO(data, dataSize, attrLen)
