@@ -30,7 +30,7 @@ namespace LUNA
             Shader *pointShader;
             bool enableFPS;
 
-            KTKR::Ptr<FmtPLY> ply;
+            KTKR::Ptr<FmtPLY> ply, ply2;
 
         public:
             void Init()
@@ -38,6 +38,7 @@ namespace LUNA
 
                 ply = FmtPLY::create("../assets/pointcloud/06_result_points.ply");
 
+                ply2 = FmtPLY::create("../assets/pointcloud/06_result_points_ab.ply");
 
                 enableFPS = false;
                 camera = new Camera{glm::vec3(0.0f, 0.0f, 3.0f)};
@@ -184,27 +185,27 @@ namespace LUNA
 
         class PLYRenderer : public KTKR::Singleton<PLYRenderer>
         {
-       protected:
+        protected:
             Camera *camera;
             Shader *plyShader;
             bool enableFPS;
 
-            KTKR::Ptr<FmtPLY> ply;
+            KTKR::Ptr<FmtPLY> ply, ply2;
 
         public:
             void Init()
             {
 
-                ply = FmtPLY::create("../assets/pointcloud/06_result_points.ply");
-
+                ply = FmtPLY::create("../assets/pointcloud/06_result_sanae_points.ply");
+                ply2 = FmtPLY::create("../assets/pointcloud/06_result_points_ab.ply");
 
                 enableFPS = false;
                 camera = new Camera{glm::vec3(0.0f, 0.0f, 3.0f)};
                 camera->DisableFPS();
 
                 plyShader = new Shader{"../assets/shader/ply.vs",
-                                         "../assets/shader/ply.fs"};
-                
+                                       "../assets/shader/ply.fs"};
+
                 KTKR::EventListener::getInstance()
                     ->bind(KTKR::EventListener::Event_Type::MOUSE_SCROLL,
                            [&]() {
@@ -251,12 +252,15 @@ namespace LUNA
                     glm::radians(camera->GetZoom()),
                     (float)DEFAULT_WIDTH / (float)DEFAULT_HEIGHT, 0.1f, 100.0f);
 
-                
                 plyShader->Use();
                 plyShader->setMat4f("view", view);
                 plyShader->setMat4f("projection", projection);
                 plyShader->setMat4f("model", model);
-                ply->Draw();
+
+                if (*_GS<bool>::getInstance()->getPtr("ply1"))
+                    ply->Draw();
+                if (*_GS<bool>::getInstance()->getPtr("ply2"))
+                    ply2->Draw();
             }
 
             void processCameraInput(GLFWwindow *window, Camera *camera, float deltaTime)

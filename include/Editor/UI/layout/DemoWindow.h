@@ -16,6 +16,10 @@ namespace LUNA::Editor
         {
             _GS<ImVec4>::getInstance()->Register("clear_color", ImVec4(0.15f, 0.15f, 0.15f, 1.00f));
             _GS<int>::getInstance()->Register("pointsize", 5);
+
+            _GS<bool>::getInstance()->Register("ply1", true);
+            _GS<bool>::getInstance()->Register("ply2", false);
+
             return false;
         }
         virtual bool Draw() const
@@ -36,7 +40,10 @@ namespace LUNA::Editor
                 ImGui::Checkbox("Demo Window", &show_demo_window); // Edit bools storing our window open/close state
                 ImGui::Checkbox("Another Window", &show_another_window);
 
-                ImGui::SliderInt("width",  _GS<int>::getInstance()->getPtr("pointsize"), 1, 10);                                                  // Edit 1 float using a slider from 0.0f to 1.0f
+                ImGui::Checkbox("ply original", _GS<bool>::getInstance()->getPtr("ply1"));
+                ImGui::Checkbox("ply adjusted", _GS<bool>::getInstance()->getPtr("ply2"));
+
+                ImGui::SliderInt("point size", _GS<int>::getInstance()->getPtr("pointsize"), 1, 10);          // Edit 1 float using a slider from 0.0f to 1.0f
                 ImGui::ColorEdit3("clear color", (float *)_GS<ImVec4>::getInstance()->getPtr("clear_color")); // Edit 3 floats representing a color
 
                 if (ImGui::Button("Button")) // Buttons return true when clicked (most widgets return true when edited/activated)
