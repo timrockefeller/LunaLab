@@ -22,7 +22,7 @@ namespace KTKR
 
     public:
         const Ptr<ImplT> GetParent() const { return parent.lock(); }
-        const std::set<ImplT> &GetChildren() const { return children; }
+        const std::set<Ptr<ImplT>> &GetChildren() const { return children; }
 
     protected:
         void LateInit() override
@@ -36,6 +36,6 @@ namespace KTKR
 
     private:
         WPtr<ImplT> parent;
-        std::set<ImplT> children;
+        std::set<Ptr<ImplT>> children;
     };
 } // namespace KTKR
