@@ -1,5 +1,6 @@
 #pragma once
 #include <Common/Ptr.h>
+#include <Common/TypeMap.h>
 #include <Common/Singleton.h>
 #include <Core/Runtime/LocalStorage.h>
 #include <vector>
@@ -9,48 +10,38 @@
 namespace LUNA::Editor
 {
 
-    class UIManager : public KTKR::Singleton<UIManager>
-    {
-    private:
-        template <typename T>
-        using enable_if_is_viewcomponent_t = std::enable_if_t<std::is_base_of_v<ViewComponent, T>>;
+	class UIManager : public KTKR::Singleton<UIManager>
+	{
+	private:
+		KTKR::TypeMap<KTKR::Ptr<ViewComponent>> viewCmpts;
 
-        std::vector<KTKR::UPtr<ViewComponent>> viewCmpts;
-        LocalStorage<bool> ViewEnabled;
+	public:
+		template <typename T>
+		using enable_if_is_viewcomponent_t = std::enable_if_t<std::is_base_of_v<ViewComponent, T>>;
 
-    public:
-        template <typename T, typename = enable_if_is_viewcomponent_t<T>>
-        void AddViewComponent(KTKR::UPtr<T> &&t)
-        {
-            viewCmpts.push_back(std::make_unique<ViewComponent>(static_cast<ViewComponent *>(t.release())));
-            ViewEnabled.getPtr(nameof::nameof_type<T>(), true);
-        }
-        template <typename T, typename = enable_if_is_viewcomponent_t<T>>
-        void AddViewComponent()
-        {
-            viewCmpts.push_back(KTKR::UPtr<ViewComponent>(new T));
-        }
+		template <typename T, typename = enable_if_is_viewcomponent_t<T>>
+		void AddViewComponent(KTKR::Ptr<T>&& t)
+		{
+			viewCmpts.insert({ typeid(T), std::make_shared<ViewComponent>(static_cast<ViewComponent*>(t.release())) });
+		}
 
-        bool InitDemo()
-        {
-            AddViewComponent<MenuBar>();
+		template <typename T, typename = enable_if_is_viewcomponent_t<T>>
+		void AddViewComponent()
+		{
+			viewCmpts.insert({ typeid(T), KTKR::Ptr<ViewComponent>(new T) });
+		}
 
-            AddViewComponent<Inspector>();
-            AddViewComponent<DemoWindow>();
-            for (auto const &cmpt : viewCmpts)
-            {
-                cmpt->Enter();
-            }
-            return true;
-        }
-        bool RunDemo()
-        {
-            for (auto const &cmpt : viewCmpts)
-            {
-                cmpt->Draw();
-            }
-            return true;
-        }
-    };
+		template <typename T, typename = enable_if_is_viewcomponent_t<T>>
+		KTKR::Ptr<T> GetViewComponent()
+		{
+			auto target = viewCmpts.find(typeid(T));
+			return target == viewCmpts.end()
+				? nullptr
+				: KTKR::CastTo<T>(target->second);
+		}
+
+		bool InitDemo();
+		bool RunDemo();
+	};
 
 } // namespace LUNA::Editor

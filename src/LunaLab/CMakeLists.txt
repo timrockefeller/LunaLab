@@ -2,6 +2,7 @@ IK_AddTarget(
     MODE EXE
     INC "${PROJECT_SOURCE_DIR}/include"
     LIB 
+        KTKR::IKit_core
         KTKR::LunaLab_Basic
         KTKR::LunaLab_Editor
         KTKR::LunaLab_OpenGL

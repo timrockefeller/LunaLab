@@ -15,6 +15,11 @@ namespace LUNA
         using enable_if_is_component_t = std::enable_if_t<std::is_base_of_v<Component, T>>;
 
     public:
+        static KTKR::Ptr<SceneObject> Create(const std::string &name = "new object")
+        {
+            return std::make_shared<SceneObject>(nullptr, name);
+        }
+
         SceneObject(KTKR::Ptr<SceneObject> parent = nullptr, const std::string &name = "SceneObject")
             : Node(parent), name(name) {}
 
@@ -95,4 +100,5 @@ namespace LUNA
     public:
         std::string name;
     };
+    using SObj = SceneObject;
 } // namespace LUNA

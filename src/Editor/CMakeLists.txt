@@ -1,6 +1,8 @@
 IK_AddTarget(
     MODE STATIC
     INC "${PROJECT_SOURCE_DIR}/include"
+    SRC
+        "${CMAKE_CURRENT_SOURCE_DIR}/UI"
     LIB 
         KTKR::IKit_core
         KTKR::LunaLab_Basic
