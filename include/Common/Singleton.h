@@ -37,7 +37,6 @@ class Singleton {
     Singleton() = default;
     virtual ~Singleton() = default;
 
-   private:
     static T& Get() {
         static T instance;
         return instance;
