@@ -1,23 +1,33 @@
 #pragma once
 
 #include <Common/Common.h>
+#include <Editor/Scene/Scene.h>
+
 #include "../ViewComponent.h"
 #include <Core/Runtime/GlobalStorage.h>
-namespace LUNA::Editor {
+namespace LUNA::Editor
+{
 
-class Inspector : public ViewComponent {
-   public:
-    virtual bool Enter() const { return false; }
-    virtual bool Draw() const {
-        ImGui::Begin("Inspector");
+    class Inspector : public ViewComponent
+    {
+    public:
+        virtual bool Enter()
+        {
+            // Scene::Create();
 
-        auto c = _GS<float>::getInstance()->Register("rtx",12.7f);
-        
-        ImGui::End();
-        return false;
-    }
-    virtual bool Close() const { return false; }
-    virtual ~Inspector() = default;
-};
+            return false;
+        }
+        virtual bool Draw()
+        {
+            ImGui::Begin("Inspector");
 
-}  // namespace LUNA::Editor
+            auto c = _GS<float>::getInstance()->Register("rtx", 12.7f);
+
+            ImGui::End();
+            return false;
+        }
+        virtual bool Close() { return false; }
+        virtual ~Inspector() = default;
+    };
+
+} // namespace LUNA::Editor

@@ -13,9 +13,9 @@ namespace LUNA::Editor {
 
 class {{LayoutName}} : public ViewComponent {
    public:
-    virtual bool Enter() const { return false; }
-    virtual bool Draw() const { return false; }
-    virtual bool Close() const { return false; }
+    virtual bool Enter() { return false; }
+    virtual bool Draw() { return false; }
+    virtual bool Close() { return false; }
     virtual ~{{LayoutName}}() = default;
 };
 

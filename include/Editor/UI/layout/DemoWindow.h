@@ -12,7 +12,7 @@ namespace LUNA::Editor
         const ImVec4 clear_color = ImVec4(0.15f, 0.15f, 0.15f, 1.00f);
 
     public:
-        virtual bool Enter() const
+        virtual bool Enter()
         {
             _GS<ImVec4>::getInstance()->Register("clear_color", ImVec4(0.15f, 0.15f, 0.15f, 1.00f));
             _GS<int>::getInstance()->Register("pointsize", 5);
@@ -22,7 +22,7 @@ namespace LUNA::Editor
 
             return false;
         }
-        virtual bool Draw() const
+        virtual bool Draw()
         {
             static bool show_demo_window = true;
             static bool show_another_window = false;
@@ -66,7 +66,7 @@ namespace LUNA::Editor
             }
             return false;
         }
-        virtual bool Close() const { return false; }
+        virtual bool Close() { return false; }
         virtual ~DemoWindow() = default;
     };
 
