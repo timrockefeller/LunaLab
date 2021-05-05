@@ -9,7 +9,7 @@ namespace LUNA::Editor
     class Attribute final : public KTKR::Singleton<Attribute>
     {
     protected:
-        Attribute();
+        Attribute(KTKR::WPtr<SObj> curSObj) : curSObj{curSObj} {}
         const KTKR::Ptr<SObj> GetCurSObj() const { return curSObj.lock(); }
         KTKR::WPtr<SObj> curSObj;
     };

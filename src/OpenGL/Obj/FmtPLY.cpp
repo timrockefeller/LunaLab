@@ -11,6 +11,7 @@ KTKR::Ptr<FmtPLY> FmtPLY::create(const std::string filePath)
 {
 
     happly::PLYData plyIn{filePath};
+
     const size_t count = plyIn.getElement("vertex").count;
     auto pos = plyIn.getVertexPositions();
     auto col = plyIn.getVertexColors();
@@ -36,10 +37,10 @@ KTKR::Ptr<FmtPLY> FmtPLY::create(const std::string filePath)
         data[i].v = 0;
     }
 
-    return std::make_shared<FmtPLY>(data);
+    return std::make_shared<FmtPLY>(data, filePath);
 }
 
-FmtPLY::FmtPLY(std::vector<PLYVert> data) : VAO{}
+FmtPLY::FmtPLY(std::vector<PLYVert> data, const std::string& filePath) : filePath{filePath}, VAO{}
 {
     glGenVertexArrays(1, &ID);
     glBindVertexArray(ID);

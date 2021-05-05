@@ -6,6 +6,9 @@ using namespace std;
 
 bool UIManager::InitDemo()
 {
+    
+    // =================================================
+    
     AddViewComponent<MenuBar>();
     AddViewComponent<Heirachy>();
     AddViewComponent<Inspector>();
@@ -14,6 +17,12 @@ bool UIManager::InitDemo()
     // demo
     AddViewComponent<DemoWindow>();
 #endif
+
+    // =================================================
+
+    AddViewComponent<KTKR_IKMvs>();
+    // =================================================
+
     for (auto const &cmpt : viewCmpts)
     {
         cmpt.second->Enter();

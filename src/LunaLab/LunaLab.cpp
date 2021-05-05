@@ -1,5 +1,6 @@
 #include <Common/Common.h>
 #include <Editor/Glfw.h>
+#include <Editor/GView.h>
 #include <Editor/UI/UIManager.h>
 #include <Editor/Scene/SceneRenderer.h>
 #include <imgui/imgui.h>
@@ -14,9 +15,18 @@ int main()
     if (!Glfw::getInstance()->Init(1920ui64, 1080ui64, "LunaLab"))
         return 1;
 
-    Editor::UIManager::getInstance()->InitDemo();
+    // =================================================
+    // GS
 
-    Demo::PLYRenderer::getInstance()->Init();
+    _GS<std::vector<KTKR::Ptr<Shader>>>::getInstance()->Register(RES_SHADER, {});
+    // =================================================
+
+    Editor::UIManager::getInstance()->InitDemo();
+    auto renderer = Editor::SceneRenderer::Create(Editor::GView::getInstance()->scene);
+
+#ifdef _DEBUG
+    // Demo::PLYRenderer::getInstance()->Init();
+#endif
 
     auto preFrameProc = []() {
         ImGui_ImplOpenGL3_NewFrame();
@@ -24,13 +34,16 @@ int main()
         ImGui::NewFrame();
     };
 
-    auto renderFrame = []() {
+    auto renderFrame = [&]() {
+
+#ifdef _DEBUG
         // Scene
-
-        Demo::PLYRenderer::getInstance()->Update();
-
+        // Demo::PLYRenderer::getInstance()->Update();
+#endif
+        renderer->Update();
         // GUI
         Editor::UIManager::getInstance()->RunDemo();
+
         ImGui::Render();
 
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

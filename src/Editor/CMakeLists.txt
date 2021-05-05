@@ -8,6 +8,7 @@ IK_AddTarget(
         KTKR::IKit_core
         KTKR::LunaLab_Basic
         KTKR::LunaLab_IKMath
+        KTKR::LunaLab_OpenGL
         KTKR::LunaLab_lib_glad
         KTKR::LunaLab_lib_imgui
         glfw3

@@ -1,5 +1,6 @@
 #pragma once
 #include "LocalStorage.h"
+#include "GSName.h"
 #include <Common/Singleton.h>
 namespace LUNA
 {

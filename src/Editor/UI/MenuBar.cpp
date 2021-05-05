@@ -41,6 +41,14 @@ bool MenuBar::Draw()
 #endif
             ImGui::EndMenu();
         }
+
+
+        if (ImGui::BeginMenu("Tools"))
+        {
+            ImGui::MenuItem("IKMvs", "", &UIManager::getInstance()->GetViewComponent<KTKR_IKMvs, void>()->enabled);
+            
+            ImGui::EndMenu();
+        }
         ImGui::EndMainMenuBar();
     }
     return false;

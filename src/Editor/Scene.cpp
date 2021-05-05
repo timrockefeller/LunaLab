@@ -1,6 +1,8 @@
 #include <Editor/Scene/Scene.h>
+#include <Editor/Scene/AllCmpts.h>
 #include <functional>
 using namespace LUNA;
+using namespace LUNA::Editor;
 using namespace KTKR;
 using namespace std;
 
@@ -70,4 +72,13 @@ const string Scene::GetName(int ID) const
         return "";
 
     return target->second;
+}
+
+void Scene::AddSobj(KTKR::Ptr<SObj> sobj)
+{
+    if (!sobj->HaveComponent<CmptTransform>())
+    {
+        sobj->AddComponent<CmptTransform>();
+    }
+    root->AddChild(sobj);
 }
