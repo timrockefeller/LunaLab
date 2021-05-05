@@ -9,33 +9,51 @@ namespace LUNA::Editor
 	public:
 		CmptTransform(KTKR::Ptr<SceneObject> sceneObject) :Component{ sceneObject }
 		{
+			return KTKR::Create<CmptTransform>(sceneObject);
+		}
+
+	public:
+		CmptTransform(KTKR::Ptr<SceneObject> sceneObject) : Component{sceneObject}
+		{
+
+			position = {0, 0, 0};
+			rotation = {0, 0, 0, 1};
+			scale = {1, 1, 1};
 			dirtyTransform = true;
 		}
 
-		const pointf3& GetPosition() const { return position; }
-		const quatf& GetRotation() const { return rotation; }
-		const eulerf& GetRotationEuler() const { return glm::eulerAngles(rotation); }
-		const scalef3& GetScale() const { return scale; }
-
+		const pointf3 &GetPosition() const { return position; }
+		const quatf &GetRotation() const { return rotation; }
+		const eulerf &GetRotationEuler() const { return glm::eulerAngles(rotation); }
+		const scalef3 &GetScale() const { return scale; }
+		const transformf GetTransform() const
+		{
+			transformf rsl = glm::mat4(1.0f);
+			rsl = glm::translate(rsl, position);
+			rsl = glm::mat4_cast(rotation) * rsl;
+			rsl = glm::scale(rsl, scale);
+			return rsl;
+		}
 		// =================================================
 
-		void SetPosition(const pointf3& position);
-		void Translate(const vecf3& delta)
+		void SetPosition(const pointf3 &position);
+		void Translate(const vecf3 &delta)
 		{
 			SetPosition(position + delta);
 		}
 
-		void SetRotation(const quatf& rotation);
-		void SetRotation(const vecf3& axis, float angle)
+		void SetRotation(const quatf &rotation);
+		void SetRotation(const vecf3 &axis, float angle)
 		{
 			SetRotation(glm::angleAxis(angle, axis));
 		}
-		void SetRotation(const eulerf& euler)
+		void SetRotation(const eulerf &euler)
 		{
 			SetRotation(glm::quat(euler));
 		}
 
-		void Rotate(const quatf& rot) {
+		void Rotate(const quatf &rot)
+		{
 			SetRotation(rot * rotation);
 		}
 		/**
@@ -43,17 +61,17 @@ namespace LUNA::Editor
 		 * @param axis
 		 * @param angle
 		 */
-		void Rotate(const vecf3& axis, float angle)
+		void Rotate(const vecf3 &axis, float angle)
 		{
 			Rotate(glm::angleAxis(angle, axis));
 		}
-		void Rotate(const eulerf& euler)
+		void Rotate(const eulerf &euler)
 		{
-			Rotate(glm::quat(euler)* rotation);
+			Rotate(glm::quat(euler) * rotation);
 		}
 
-		void SetScale(const scalef3& xyz);
-		void Scale(const scalef3& scale)
+		void SetScale(const scalef3 &xyz);
+		void Scale(const scalef3 &scale)
 		{
 			SetScale(this->scale * scale);
 		}
