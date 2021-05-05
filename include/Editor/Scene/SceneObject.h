@@ -3,6 +3,7 @@
 #include <Common/Node.h>
 #include "Component.h"
 #include <Common/TypeMap.h>
+#include <Core/IKMath/IKMath.hpp>
 #include <string>
 #include <vector>
 namespace LUNA
@@ -36,36 +37,23 @@ namespace LUNA
         }
 
         template <typename T, typename = enable_if_is_component_t<T>>
-        bool HaveComponent() const { return components.find(typeid(T)) != components.cend(); }
-
-        const std::vector<KTKR::Ptr<Component>> GetAllComponents() const
+        bool HaveComponent() const
         {
-            std::vector<KTKR::Ptr<Component>> rsl;
-            for (auto &cmp : components)
-                rsl.push_back(cmp.second);
-            return rsl;
+            return components.find(typeid(T)) != components.cend();
         }
+
+        const std::vector<KTKR::Ptr<Component>> GetAllComponents() const;
 
         template <typename T, typename... Args, typename = enable_if_is_component_t<T>>
         const KTKR::Ptr<T> AddComponent(Args &&...args)
         {
             if (HaveComponent<T>())
                 return nullptr;
-            auto cmpt = T::New(This<SceneObject>(), std::forward<Args>(args)...);
+            auto cmpt = T::Create(This<SceneObject>(), std::forward<Args>(args)...);
             return cmpt;
         }
 
-        void AttachComponent(KTKR::Ptr<Component> component)
-        {
-            auto target = components.find(typeid(*component));
-
-            if (target != components.end())
-            {
-                target->second->wSceneObject.reset();
-                component->wSceneObject = This<SceneObject>();
-                components[typeid(*component)] = component;
-            }
-        }
+        void AttachComponent(KTKR::Ptr<Component> component);
 
         template <typename T, typename = enable_if_is_component_t<T>>
         bool DetachComponent()
@@ -76,23 +64,16 @@ namespace LUNA
             tarcmp->second->wSceneObject.reset();
             return true;
         }
-        bool DetachComponent(KTKR::Ptr<Component> component)
-        {
-            auto target = components.find(typeid(*component));
-            if (target == components.end())
-                return false;
-            if (target->second != component)
-                return false;
-            target->second->wSceneObject.reset();
-            components.erase(target);
-            return true;
-        }
+        bool DetachComponent(KTKR::Ptr<Component> component);
 
-        template <typename T, typename = enable_if_is_component_t<T>>
-        const KTKR::Ptr<T> GetComponentInChildren();
+        // template <typename T, typename = enable_if_is_component_t<T>>
+        // const KTKR::Ptr<T> GetComponentInChildren();
 
-        template <typename T, typename = enable_if_is_component_t<T>>
-        const std::vector<KTKR::Ptr<T>> GetComponentsInChildren();
+        // template <typename T, typename = enable_if_is_component_t<T>>
+        // const std::vector<KTKR::Ptr<T>> GetComponentsInChildren();
+
+        // 即时计算
+        const transformf GetLocalToWorldMatrix();
 
     private:
         KTKR::TypeMap<KTKR::Ptr<Component>> components;
