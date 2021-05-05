@@ -14,13 +14,15 @@ namespace LUNA
     public:
         struct PLYVert
         {
-            double x, y, z, w;// 0
-            double nx, ny, nz;// 32
-            unsigned char r, g, b, a;// 56
-            double u, v;// 64
+            double x, y, z, w;        // 0
+            double nx, ny, nz;        // 32
+            unsigned char r, g, b, a; // 56
+            double u, v;              // 64
         };
         FmtPLY() = default;
-        FmtPLY(std::vector<PLYVert> data);
+        FmtPLY(std::vector<PLYVert> data, const std::string& filepath = "");
+
+        std::string filePath;
 
         static KTKR::Ptr<FmtPLY> create(const std::string filePath);
     };

@@ -18,7 +18,8 @@ Camera::Camera(glm::vec3 position,
       MovementSpeed(SPEED),
       MouseSensitivity(SENSITIVITY),
       Zoom(ZOOM),
-      FPS(false) {
+      FPS(false)
+{
     Position = position;
     WorldUp = up;
     Yaw = yaw;
@@ -48,7 +49,8 @@ Camera::Camera(float posX,
 }
 */
 
-glm::mat4 Camera::GetViewMatrix() {
+glm::mat4 Camera::GetViewMatrix()
+{
     return glm::lookAt(Position, Position + Front, Up);
     // glm::mat4 a(1), b(1);// didnot work ;c
     // a[0][0] = Right.x;
@@ -66,11 +68,15 @@ glm::mat4 Camera::GetViewMatrix() {
     // return a * b;
 }
 
-glm::mat4 Camera::GetProjectionMatrix() {
+glm::mat4 Camera::GetProjectionMatrix()
+{
+    if (dirty)
+        updateCameraVectors();
     return glm::perspective(glm::radians(Zoom), RationWH, 0.1f, 100.0f);
 }
 
-void Camera::ProcessKeyboard(Camera_Movement direction, float deltaTime) {
+void Camera::ProcessKeyboard(Camera_Movement direction, float deltaTime)
+{
     float velocity = MovementSpeed * deltaTime;
     glm::vec3 front =
         glm::normalize(Front * (FPS ? glm::vec3(1, 0, 1) : glm::vec3(1)));
@@ -84,19 +90,29 @@ void Camera::ProcessKeyboard(Camera_Movement direction, float deltaTime) {
         Position += Right * velocity;
 }
 
-glm::vec3 Camera::GetPosition() const {
+const glm::vec3 Camera::GetPosition()
+{
+    if (dirty)
+        updateCameraVectors();
     return Position;
 }
-glm::vec3 Camera::GetFront() const {
+const glm::vec3 Camera::GetFront()
+{
+    if (dirty)
+        updateCameraVectors();
     return Front;
 }
-float Camera::GetZoom() const {
+const float Camera::GetZoom()
+{
+    if (dirty)
+        updateCameraVectors();
     return Zoom;
 }
 
 void Camera::ProcessMouseMovement(float xoffset,
                                   float yoffset,
-                                  GLboolean constrainPitch) {
+                                  GLboolean constrainPitch)
+{
     xoffset *= MouseSensitivity;
     yoffset *= MouseSensitivity;
 
@@ -104,18 +120,18 @@ void Camera::ProcessMouseMovement(float xoffset,
     Pitch += yoffset;
 
     // Make sure that when pitch is out of bounds, screen doesn't get flipped
-    if (constrainPitch) {
+    if (constrainPitch)
+    {
         if (Pitch > 89.0f)
             Pitch = 89.0f;
         if (Pitch < -89.0f)
             Pitch = -89.0f;
     }
-
-    // Update Front, Right and Up Vectors using the updated Euler angles
-    updateCameraVectors();
+    dirty = true;
 }
 
-void Camera::ProcessMouseScroll(float yoffset) {
+void Camera::ProcessMouseScroll(float yoffset)
+{
     if (Zoom >= 1.0f && Zoom <= 45.0f)
         Zoom -= yoffset;
     if (Zoom <= 1.0f)
@@ -124,7 +140,9 @@ void Camera::ProcessMouseScroll(float yoffset) {
         Zoom = 45.0f;
 }
 
-void Camera::updateCameraVectors() {
+void Camera::updateCameraVectors()
+{
+    dirty = false;
     // Calculate the new Front vector
     glm::vec3 front;
     front.x = cos(glm::radians(Yaw)) * cos(glm::radians(Pitch));
@@ -139,9 +157,11 @@ void Camera::updateCameraVectors() {
     Up = glm::normalize(glm::cross(Right, Front));
 }
 
-void Camera::EnableFPS() {
+void Camera::EnableFPS()
+{
     FPS = true;
 }
-void Camera::DisableFPS() {
+void Camera::DisableFPS()
+{
     FPS = false;
 }
