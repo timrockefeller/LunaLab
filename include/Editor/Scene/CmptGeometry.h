@@ -11,6 +11,14 @@ namespace LUNA::Editor
     {
 
     public:
+        static KTKR::Ptr<CmptGeometry> Create(KTKR::Ptr<SceneObject> sceneObject,
+                                              KTKR::Ptr<LUNA::VAO> geometry,
+                                              KTKR::Ptr<LUNA::Shader> shader)
+        {
+            return KTKR::Create<CmptGeometry>(sceneObject, geometry, shader);
+        }
+
+    public:
         CmptGeometry(KTKR::Ptr<SceneObject> sceneObject,
                      KTKR::Ptr<LUNA::VAO> geometry,
                      KTKR::Ptr<LUNA::Shader> shader)

@@ -4,7 +4,7 @@ namespace KTKR {
 
 class HeapObj : public std::enable_shared_from_this<HeapObj> {
     template <typename ImplT, typename... Args>
-    friend const Ptr<ImplT> New(Args&&... args);
+    friend const Ptr<ImplT> Create(Args&&... args);
 
    protected:
     template <typename T = HeapObj>
@@ -44,7 +44,7 @@ class HeapObj : public std::enable_shared_from_this<HeapObj> {
 // https://stackoverflow.com/questions/48327250/in-function-parameter-pack
 // Combining forwarding reference with parameter pack, one can write easily generic proxy functions without performance loss in terms of lvalue/rvalue.
 template <typename ImplT, typename... Args>
-const Ptr<ImplT> New(Args&&... args) {
+const Ptr<ImplT> Create(Args&&... args) {
     const auto pImplT = Ptr<ImplT>(new ImplT(std::forward<Args>(args)...), HeapObj::Delete);
     auto pHeap = static_cast<Ptr<HeapObj>>(pImplT);
     pHeap->LateInit();

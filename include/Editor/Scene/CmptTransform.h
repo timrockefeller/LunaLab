@@ -7,7 +7,7 @@ namespace LUNA::Editor
 	class CmptTransform final : public Component
 	{
 	public:
-		CmptTransform(KTKR::Ptr<SceneObject> sceneObject) :Component{ sceneObject }
+		static KTKR::Ptr<CmptTransform> Create(KTKR::Ptr<SceneObject> sceneObject)
 		{
 			return KTKR::Create<CmptTransform>(sceneObject);
 		}

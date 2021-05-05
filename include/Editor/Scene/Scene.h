@@ -9,7 +9,7 @@
 #include <Common/Heap.h>
 
 #include "SceneObject.h"
-
+#include <Editor/Scene/AllCmpts.h>
 #include <string>
 #include <mutex>
 #include <map>
@@ -34,7 +34,10 @@ namespace LUNA
         Scene(KTKR::Ptr<SObj> root, const std::string &name = "") : root{root}, name{name} {}
         static const KTKR::Ptr<Scene> Create(KTKR::Ptr<SObj> root, const std::string &name = "")
         {
-            return KTKR::New<Scene>(root, name);
+            if (!root->HaveComponent<Editor::CmptTransform>())
+                root->AddComponent<Editor::CmptTransform>();
+            
+            return KTKR::Create<Scene>(root, name);
         }
 
     protected:
@@ -53,5 +56,7 @@ namespace LUNA
         const std::string GetName(int ID) const;
 
         void SetWriteLock(bool isLock);
+
+        void AddSobj(KTKR::Ptr<SObj> sobj);
     };
 } // namespace LUNA
