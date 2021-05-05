@@ -5,6 +5,9 @@
 
 #include "../ViewComponent.h"
 #include <Core/Runtime/GlobalStorage.h>
+
+#include "../Attribute.h"
+
 namespace LUNA::Editor
 {
 
