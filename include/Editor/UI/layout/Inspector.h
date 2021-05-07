@@ -24,8 +24,8 @@ namespace LUNA::Editor
         {
             ImGui::Begin("Inspector");
 
-            auto c = _GS<float>::getInstance()->Register("rtx", 12.7f);
-
+            Attribute::getInstance()->ImplInspector();
+            
             ImGui::End();
             return false;
         }

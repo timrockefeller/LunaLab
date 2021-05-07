@@ -1,5 +1,5 @@
 #include <Editor/UI/layout/Heirachy.h>
-
+#include <Editor/UI/Attribute.h>
 using namespace LUNA::Editor;
 
 void Heirachy::IterChild(const KTKR::Ptr<SceneObject> root, long long &ptr_id)
@@ -14,7 +14,10 @@ void Heirachy::IterChild(const KTKR::Ptr<SceneObject> root, long long &ptr_id)
         {
             bool node_open = ImGui::TreeNodeEx((void *)ptr_id, node_flags, c->name.c_str());
             if (ImGui::IsItemClicked())
+            {
                 nodeSel = ptr_id;
+                Attribute::getInstance()->SetCurSObj(c);
+            }
             ptr_id++;
             if (node_open)
             {
@@ -27,7 +30,10 @@ void Heirachy::IterChild(const KTKR::Ptr<SceneObject> root, long long &ptr_id)
             node_flags |= ImGuiTreeNodeFlags_Leaf | ImGuiTreeNodeFlags_NoTreePushOnOpen;
             ImGui::TreeNodeEx((void *)ptr_id, node_flags, c->name.c_str());
             if (ImGui::IsItemClicked())
+            {
                 nodeSel = ptr_id;
+                Attribute::getInstance()->SetCurSObj(c);
+            }
             ptr_id++;
         }
     }
