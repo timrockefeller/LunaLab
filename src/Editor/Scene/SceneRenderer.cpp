@@ -11,7 +11,7 @@ void SceneRenderer::Init()
 {
     enableFPS = false;
     camera = std::make_shared<Camera>(glm::vec3{5.0f, 0.0f, 0.0f}, glm::vec3{0, 1, 0});
-    
+
     KTKR::EventListener::getInstance()
         ->bind(KTKR::EventListener::Event_Type::MOUSE_SCROLL,
                [&]() {
@@ -53,12 +53,13 @@ void SceneRenderer::RenderChild(KTKR::Ptr<SceneObject> sobj)
 
         if (c_geometry != nullptr && c_geometry->enabled)
         {
-            // glm::mat4 model = child->GetLocalToWorldMatrix();
-            glm::mat4 model = glm::mat4(1.0f);
+            glPointSize(static_cast<float>(c_geometry->pointSize));
+            glm::mat4 model = child->GetLocalToWorldMatrix();
+            // glm::mat4 model = glm::mat4(1.0f);
             glm::mat4 view = camera->GetViewMatrix();
             glm::mat4 projection = glm::perspective(
                 glm::radians(camera->GetZoom()),
-                (float)DEFAULT_WIDTH / (float)DEFAULT_HEIGHT, 0.1f, 100.0f);
+                (float)width / (float)height, 0.1f, 100.0f);
             c_geometry->shader->Use();
             c_geometry->shader->setMat4f("view", view);
             c_geometry->shader->setMat4f("projection", projection);
@@ -71,6 +72,8 @@ void SceneRenderer::Update()
 {
     if (scene == nullptr)
         return;
+    glfwGetWindowSize(Glfw::getInstance()->getWindow(), &width, &height);
+
     processCameraInput(Glfw::getInstance()->getWindow(), camera,
                        Glfw::getInstance()->deltaTime);
     glPointSize(*_GS<int>::getInstance()->getPtr("pointsize"));
