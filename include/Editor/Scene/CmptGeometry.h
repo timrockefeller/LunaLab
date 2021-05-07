@@ -32,6 +32,8 @@ namespace LUNA::Editor
         KTKR::Ptr<LUNA::VAO> geometry;
         KTKR::Ptr<LUNA::Shader> shader;
         bool enabled;
+
+        int pointSize = 5;
     };
 
 }

@@ -17,6 +17,8 @@ namespace LUNA
     {
         class SceneRenderer : public KTKR::HeapObj
         {
+            int width;
+            int height;
             KTKR::Ptr<Scene> scene;
             KTKR::Ptr<Camera> camera;
             void RenderChild(KTKR::Ptr<SceneObject> sobj);

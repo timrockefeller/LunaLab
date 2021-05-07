@@ -23,9 +23,12 @@ namespace LUNA::Editor
 		}
 
 		const pointf3 &GetPosition() const { return position; }
+		pointf3 *GetPositionPtr() { return &position; }
 		const quatf &GetRotation() const { return rotation; }
-		const eulerf &GetRotationEuler() const { return glm::eulerAngles(rotation); }
+		quatf *GetRotationPtr() { return &rotation; }
+		const eulerf GetRotationEuler() const { return glm::eulerAngles(rotation); }
 		const scalef3 &GetScale() const { return scale; }
+		scalef3 *GetScalePtr() { return &scale; }
 		const transformf GetTransform() const
 		{
 			transformf rsl = glm::mat4(1.0f);
