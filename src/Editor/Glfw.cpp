@@ -89,19 +89,19 @@ bool Glfw::Init(size_t width, size_t height, const string &title)
             yoffset = lastY - (float)ypos;
             lastX = (float)xpos;
             lastY = (float)ypos;
-            KTKR::EventListener::getInstance()->response(
+            KTKR::EventListener::Get()->response(
                 KTKR::EventListener::Event_Type::MOUSE_MOVE);
         });
     glfwSetMouseButtonCallback(window, [](GLFWwindow *window, int button, int action, int mods) {
         if (action == GLFW_PRESS)
         {
-            KTKR::EventListener::getInstance()->response(
+            KTKR::EventListener::Get()->response(
                 KTKR::EventListener::Event_Type::MOUSE_PRESS | button);
             // GLFW_MOUSE_BUTTON_LEFT
         }
         else if (action == GLFW_RELEASE)
         {
-            KTKR::EventListener::getInstance()->response(
+            KTKR::EventListener::Get()->response(
                 KTKR::EventListener::Event_Type::MOUSE_RELEASE | button);
         }
     });
@@ -111,7 +111,7 @@ bool Glfw::Init(size_t width, size_t height, const string &title)
                                                 (float)xoffset);
             _GS<float>::getInstance()->Register(strMouseScrollY,
                                                 (float)yoffset);
-            KTKR::EventListener::getInstance()->response(
+            KTKR::EventListener::Get()->response(
                 KTKR::EventListener::Event_Type::MOUSE_SCROLL);
         });
     glfwSetKeyCallback(window, [](GLFWwindow *window, int key, int scanCode,
@@ -124,8 +124,8 @@ bool Glfw::Init(size_t width, size_t height, const string &title)
                                                ? KTKR::EventListener::KEYBOARD_RELEASE
                                                : 0)));
         if (kbState != 0)
-            KTKR::EventListener::getInstance()->response(key | kbState);
-        KTKR::EventListener::getInstance()->response(key | KTKR::EventListener::KEYBOARD);
+            KTKR::EventListener::Get()->response(key | kbState);
+        KTKR::EventListener::Get()->response(key | KTKR::EventListener::KEYBOARD);
     });
 
     // Setup Dear ImGui context
@@ -166,7 +166,7 @@ bool Glfw::Init(size_t width, size_t height, const string &title)
     // Update Processes
     _startOp = [&]() {
         int display_w, display_h;
-        glfwGetFramebufferSize(Glfw::getInstance()->getWindow(), &display_w, &display_h);
+        glfwGetFramebufferSize(Glfw::Get()->getWindow(), &display_w, &display_h);
         glViewport(0, 0, display_w, display_h);
         auto clear_color = _GS<ImVec4>::getInstance()->getPtr("clear_color");
         if (clear_color)
@@ -196,7 +196,7 @@ void Glfw::Terminate()
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
 
-    glfwDestroyWindow(Glfw::getInstance()->getWindow());
+    glfwDestroyWindow(Glfw::Get()->getWindow());
     glfwTerminate();
 }
 GLFWwindow *Glfw::getWindow()
@@ -206,9 +206,9 @@ GLFWwindow *Glfw::getWindow()
 
 void Glfw::RunDemo()
 {
-    Editor::UIManager::getInstance()->InitDemo();
+    Editor::UIManager::Get()->InitDemo();
     // Loop
-    while (!glfwWindowShouldClose(Glfw::getInstance()->getWindow()))
+    while (!glfwWindowShouldClose(Glfw::Get()->getWindow()))
     {
         // Poll and handle events (inputs, window resize, etc.)
         // You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to tell if dear imgui wants to use your inputs.
@@ -224,12 +224,12 @@ void Glfw::RunDemo()
 
         // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
 
-        Editor::UIManager::getInstance()->RunDemo();
+        Editor::UIManager::Get()->RunDemo();
 
         // Rendering
         ImGui::Render();
         int display_w, display_h;
-        glfwGetFramebufferSize(Glfw::getInstance()->getWindow(), &display_w, &display_h);
+        glfwGetFramebufferSize(Glfw::Get()->getWindow(), &display_w, &display_h);
         glViewport(0, 0, display_w, display_h);
         auto clear_color = _GS<ImVec4>::getInstance()->getPtr("clear_color");
         if (clear_color)
@@ -237,7 +237,7 @@ void Glfw::RunDemo()
         glClear(GL_COLOR_BUFFER_BIT);
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-        glfwSwapBuffers(Glfw::getInstance()->getWindow());
+        glfwSwapBuffers(Glfw::Get()->getWindow());
     }
 
     Terminate();

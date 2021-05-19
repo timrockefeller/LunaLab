@@ -1,6 +1,6 @@
 #pragma once
 #include <Common/Ptr.h>
-#include <Common/Singleton.h>
+#include <Ikit/STL/Singleton.h>
 #include "../Scene/SceneObject.h"
 #include "../Scene/AllCmpts.h"
 #include <Common/Visitor.h>

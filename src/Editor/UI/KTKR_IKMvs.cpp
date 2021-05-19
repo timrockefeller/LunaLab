@@ -1,6 +1,8 @@
 #include <string>
 #include <imgui/imgui_stdlib.h>
 
+#include <IKMvs/SfM/SfM.h>
+
 #include <Core/Runtime/GlobalStorage.h>
 #include <Core/OpenGL/Obj/FmtPLY.h>
 #include <Core/OpenGL/Shader.h>
@@ -16,7 +18,7 @@ using namespace LUNA::Editor;
 bool KTKR_IKMvs::Enter()
 {
     plyshader = std::make_shared<Shader>("../assets/shader/ply.vs", "../assets/shader/ply.fs");
-    _GS<std::string>::getInstance()->Register(IKMVS_PLY_LOAD_PATH, "");
+    _GS<std::string>::getInstance()->Register(IKMVS_PLY_LOAD_PATH, "../assets/pointcloud/06_result_sanae_3_points.ply");
     _GS<std::vector<KTKR::Ptr<Shader>>>::getInstance()->getPtr(RES_SHADER)->push_back(plyshader);
     return false;
 }
@@ -40,7 +42,7 @@ bool KTKR_IKMvs::Draw()
                     // ./asset/example.ply -> example.ply
                     auto sobj = SceneObject::Create(plyobj->filePath.substr(plyobj->filePath.find_last_of("/") + 1));
                     sobj->AddComponent<CmptGeometry>(plyobj, plyshader);
-                    Editor::GView::getInstance()->AddSobjToTop(sobj);
+                    Editor::GView::Get()->AddSobjToTop(sobj);
                 }
             }
             ImGui::EndTabItem();
@@ -57,6 +59,9 @@ bool KTKR_IKMvs::Draw()
         {
             ImGui::TextWrapped("Customable pipeline of SfM processing.");
             ImGui::Spacing();
+
+            // ImGui::ProgressBar(progress, ImVec2(0.0f, 0.0f));
+
             ImGui::EndTabItem();
         }
         ImGui::EndTabBar();

@@ -12,7 +12,7 @@ using namespace std;
 
 int main()
 {
-    if (!Glfw::getInstance()->Init(1920ui64, 1080ui64, "LunaLab"))
+    if (!Glfw::Get()->Init(1920ui64, 1080ui64, "LunaLab"))
         return 1;
 
     // =================================================
@@ -21,11 +21,11 @@ int main()
     _GS<std::vector<KTKR::Ptr<Shader>>>::getInstance()->Register(RES_SHADER, {});
     // =================================================
 
-    Editor::UIManager::getInstance()->InitDemo();
-    auto renderer = Editor::SceneRenderer::Create(Editor::GView::getInstance()->scene);
+    Editor::UIManager::Get()->InitDemo();
+    auto renderer = Editor::SceneRenderer::Create(Editor::GView::Get()->scene);
 
 #ifdef _DEBUG
-    // Demo::PLYRenderer::getInstance()->Init();
+    // Demo::PLYRenderer::Get()->Init();
 #endif
 
     auto preFrameProc = []() {
@@ -38,11 +38,11 @@ int main()
 
 #ifdef _DEBUG
         // Scene
-        // Demo::PLYRenderer::getInstance()->Update();
+        // Demo::PLYRenderer::Get()->Update();
 #endif
         renderer->Update();
         // GUI
-        Editor::UIManager::getInstance()->RunDemo();
+        Editor::UIManager::Get()->RunDemo();
 
         ImGui::Render();
 
@@ -55,6 +55,6 @@ int main()
 
     OpQueue operations;
     operations << preFrameProc << renderFrame << postFrameProc;
-    Glfw::getInstance()->Run(&operations);
+    Glfw::Get()->Run(&operations);
     return 0;
 }

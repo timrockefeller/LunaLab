@@ -16,7 +16,7 @@ void Heirachy::IterChild(const KTKR::Ptr<SceneObject> root, long long &ptr_id)
             if (ImGui::IsItemClicked())
             {
                 nodeSel = ptr_id;
-                Attribute::getInstance()->SetCurSObj(c);
+                Attribute::Get()->SetCurSObj(c);
             }
             ptr_id++;
             if (node_open)
@@ -32,7 +32,7 @@ void Heirachy::IterChild(const KTKR::Ptr<SceneObject> root, long long &ptr_id)
             if (ImGui::IsItemClicked())
             {
                 nodeSel = ptr_id;
-                Attribute::getInstance()->SetCurSObj(c);
+                Attribute::Get()->SetCurSObj(c);
             }
             ptr_id++;
         }
@@ -43,7 +43,7 @@ bool Heirachy::Draw()
 {
     ImGui::Begin("Heirachy");
     nodeSum = 0;
-    IterChild(GView::getInstance()->GetSceneRoot(), nodeSum);
+    IterChild(GView::Get()->GetSceneRoot(), nodeSum);
     ImGui::End();
     return false;
 }

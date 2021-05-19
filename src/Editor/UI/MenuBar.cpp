@@ -34,10 +34,10 @@ bool MenuBar::Draw()
         }
         if (ImGui::BeginMenu("View"))
         {
-            ImGui::MenuItem("Heirachy", "", &UIManager::getInstance()->GetViewComponent<Heirachy, void>()->enabled);
-            ImGui::MenuItem("Inspector", "", &UIManager::getInstance()->GetViewComponent<Inspector, void>()->enabled);
+            ImGui::MenuItem("Heirachy", "", &UIManager::Get()->GetViewComponent<Heirachy, void>()->enabled);
+            ImGui::MenuItem("Inspector", "", &UIManager::Get()->GetViewComponent<Inspector, void>()->enabled);
 #ifdef _DEBUG
-            ImGui::MenuItem("DemoWindow", "", &UIManager::getInstance()->GetViewComponent<DemoWindow, void>()->enabled);
+            ImGui::MenuItem("DemoWindow", "", &UIManager::Get()->GetViewComponent<DemoWindow, void>()->enabled);
 #endif
             ImGui::EndMenu();
         }
@@ -45,7 +45,7 @@ bool MenuBar::Draw()
 
         if (ImGui::BeginMenu("Tools"))
         {
-            ImGui::MenuItem("IKMvs", "", &UIManager::getInstance()->GetViewComponent<KTKR_IKMvs, void>()->enabled);
+            ImGui::MenuItem("IKMvs", "", &UIManager::Get()->GetViewComponent<KTKR_IKMvs, void>()->enabled);
             
             ImGui::EndMenu();
         }

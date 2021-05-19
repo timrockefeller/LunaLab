@@ -12,7 +12,7 @@ void SceneRenderer::Init()
     enableFPS = false;
     camera = std::make_shared<Camera>(glm::vec3{5.0f, 0.0f, 0.0f}, glm::vec3{0, 1, 0});
 
-    KTKR::EventListener::getInstance()
+    KTKR::EventListener::Get()
         ->bind(KTKR::EventListener::Event_Type::MOUSE_SCROLL,
                [&]() {
                    if (!enableFPS)
@@ -35,7 +35,7 @@ void SceneRenderer::Init()
                     camera->ProcessMouseMovement(*xoffset, *yoffset);
             })
         ->bind(KTKR::EventListener::KEYBOARD_PRESS | GLFW_KEY_ESCAPE,
-               [&]() { Glfw::getInstance()->CloseWindow(); })
+               [&]() { Glfw::Get()->CloseWindow(); })
         ->bind(KTKR::EventListener::Event_Type::MOUSE_PRESS | GLFW_MOUSE_BUTTON_RIGHT,
                [&]() { enableFPS = true; })
         ->bind(KTKR::EventListener::Event_Type::MOUSE_RELEASE | GLFW_MOUSE_BUTTON_RIGHT,
@@ -72,10 +72,10 @@ void SceneRenderer::Update()
 {
     if (scene == nullptr)
         return;
-    glfwGetWindowSize(Glfw::getInstance()->getWindow(), &width, &height);
+    glfwGetWindowSize(Glfw::Get()->getWindow(), &width, &height);
 
-    processCameraInput(Glfw::getInstance()->getWindow(), camera,
-                       Glfw::getInstance()->deltaTime);
+    processCameraInput(Glfw::Get()->getWindow(), camera,
+                       Glfw::Get()->deltaTime);
     glPointSize(*_GS<int>::getInstance()->getPtr("pointsize"));
     glEnable(GL_DEPTH_TEST);
 
@@ -89,7 +89,7 @@ void SceneRenderer::processCameraInput(GLFWwindow *window, KTKR::Ptr<Camera> cam
 {
 
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        Glfw::getInstance()->CloseWindow();
+        Glfw::Get()->CloseWindow();
 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         camera->ProcessKeyboard(CAM_FORWARD, deltaTime);

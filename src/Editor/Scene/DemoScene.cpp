@@ -76,7 +76,7 @@ void LUNA::Demo::CubeMapRenderer::Init()
     pointVAO->SetRenderMode(GL_POINTS);
     pointShader = new Shader{"../assets/shader/vert_point.vs",
                              "../assets/shader/frag_point.fs"};
-    KTKR::EventListener::getInstance()
+    KTKR::EventListener::Get()
         ->bind(KTKR::EventListener::Event_Type::MOUSE_SCROLL,
                [&]() {
                    if (!enableFPS)
@@ -99,7 +99,7 @@ void LUNA::Demo::CubeMapRenderer::Init()
                     camera->ProcessMouseMovement(*xoffset, *yoffset);
             })
         ->bind(KTKR::EventListener::KEYBOARD_PRESS | GLFW_KEY_ESCAPE,
-               [&]() { Glfw::getInstance()->CloseWindow(); })
+               [&]() { Glfw::Get()->CloseWindow(); })
         ->bind(KTKR::EventListener::Event_Type::MOUSE_PRESS | GLFW_MOUSE_BUTTON_RIGHT,
                [&]() { enableFPS = true; })
         ->bind(KTKR::EventListener::Event_Type::MOUSE_RELEASE | GLFW_MOUSE_BUTTON_RIGHT,
@@ -113,8 +113,8 @@ void LUNA::Demo::CubeMapRenderer::Init()
 void LUNA::Demo::CubeMapRenderer::Update()
 {
 
-    processCameraInput(Glfw::getInstance()->getWindow(), camera,
-                       Glfw::getInstance()->deltaTime);
+    processCameraInput(Glfw::Get()->getWindow(), camera,
+                       Glfw::Get()->deltaTime);
     glPointSize(*_GS<int>::getInstance()->getPtr("pointsize"));
     glEnable(GL_DEPTH_TEST);
     glm::mat4 model = glm::mat4(1.0f);
@@ -142,7 +142,7 @@ void LUNA::Demo::CubeMapRenderer::processCameraInput(GLFWwindow *window, Camera 
 {
 
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        Glfw::getInstance()->CloseWindow();
+        Glfw::Get()->CloseWindow();
 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         camera->ProcessKeyboard(CAM_FORWARD, deltaTime);
@@ -167,7 +167,7 @@ void LUNA::Demo::PLYRenderer::Init()
     plyShader = new Shader{"../assets/shader/ply.vs",
                            "../assets/shader/ply.fs"};
 
-    KTKR::EventListener::getInstance()
+    KTKR::EventListener::Get()
         ->bind(KTKR::EventListener::Event_Type::MOUSE_SCROLL,
                [&]() {
                    if (!enableFPS)
@@ -190,7 +190,7 @@ void LUNA::Demo::PLYRenderer::Init()
                     camera->ProcessMouseMovement(*xoffset, *yoffset);
             })
         ->bind(KTKR::EventListener::KEYBOARD_PRESS | GLFW_KEY_ESCAPE,
-               [&]() { Glfw::getInstance()->CloseWindow(); })
+               [&]() { Glfw::Get()->CloseWindow(); })
         ->bind(KTKR::EventListener::Event_Type::MOUSE_PRESS | GLFW_MOUSE_BUTTON_RIGHT,
                [&]() { enableFPS = true; })
         ->bind(KTKR::EventListener::Event_Type::MOUSE_RELEASE | GLFW_MOUSE_BUTTON_RIGHT,
@@ -204,8 +204,8 @@ void LUNA::Demo::PLYRenderer::Init()
 void LUNA::Demo::PLYRenderer::Update()
 {
 
-    processCameraInput(Glfw::getInstance()->getWindow(), camera,
-                       Glfw::getInstance()->deltaTime);
+    processCameraInput(Glfw::Get()->getWindow(), camera,
+                       Glfw::Get()->deltaTime);
     glPointSize(*_GS<int>::getInstance()->getPtr("pointsize"));
     glEnable(GL_DEPTH_TEST);
     glm::mat4 model = glm::mat4(1.0f);
@@ -229,7 +229,7 @@ void LUNA::Demo::PLYRenderer::processCameraInput(GLFWwindow *window, Camera *cam
 {
 
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        Glfw::getInstance()->CloseWindow();
+        Glfw::Get()->CloseWindow();
 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         camera->ProcessKeyboard(CAM_FORWARD, deltaTime);

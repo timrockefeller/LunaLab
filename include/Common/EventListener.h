@@ -1,6 +1,7 @@
 #pragma once
 #include <Common/OpQueue.h>
-#include <Common/Singleton.h>
+// #include <Common/Singleton.h>
+#include <Ikit/STL/Singleton.h>
 #include <functional>
 #include <map>
 namespace KTKR {

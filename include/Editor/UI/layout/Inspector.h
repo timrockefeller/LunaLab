@@ -24,7 +24,7 @@ namespace LUNA::Editor
         {
             ImGui::Begin("Inspector");
 
-            Attribute::getInstance()->ImplInspector();
+            Attribute::Get()->ImplInspector();
             
             ImGui::End();
             return false;
