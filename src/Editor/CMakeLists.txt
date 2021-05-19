@@ -6,6 +6,7 @@ IK_AddTarget(
         "${CMAKE_CURRENT_SOURCE_DIR}/Scene"
     LIB 
         KTKR::IKit_core
+        KTKR::IKMvs_core
         KTKR::LunaLab_Basic
         KTKR::LunaLab_IKMath
         KTKR::LunaLab_OpenGL

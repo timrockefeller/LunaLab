@@ -20,6 +20,9 @@ bool KTKR_IKMvs::Enter()
     plyshader = std::make_shared<Shader>("../assets/shader/ply.vs", "../assets/shader/ply.fs");
     _GS<std::string>::getInstance()->Register(IKMVS_PLY_LOAD_PATH, "../assets/pointcloud/06_result_sanae_3_points.ply");
     _GS<std::vector<KTKR::Ptr<Shader>>>::getInstance()->getPtr(RES_SHADER)->push_back(plyshader);
+    
+    MVS::SfM::Get()->Init();
+    
     return false;
 }
 bool KTKR_IKMvs::Draw()
