@@ -20,5 +20,4 @@ void main()
     TexCoords = aTexCoords;    
     Color = aColor;
     gl_Position = projection * view * model * vec4(aPos);
-    gl_PointSize = 10.0f;
 }

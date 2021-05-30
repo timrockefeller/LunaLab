@@ -162,8 +162,6 @@ bool Glfw::Init(size_t width, size_t height, const string &title)
     glViewport(0, 0, static_cast<int>(width), static_cast<int>(height));
     glfwSetFramebufferSizeCallback(window, updateViewport);
 
-    glEnable(GL_PROGRAM_POINT_SIZE); 
-    
     // =================================================
     // Update Processes
     _startOp = [&]() {
