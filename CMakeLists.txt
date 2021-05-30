@@ -9,7 +9,7 @@ list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 include(IKInit)
 
 IK_AddPackage(IKit 0.0.4)
-IK_AddPackage(IKMvs 0.0.1)
+IK_AddPackage(IKMvs 0.0.2)
 
 IK_InitProject(${PROJECT_NAME})
 
