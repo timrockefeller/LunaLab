@@ -3,6 +3,8 @@
 #include <Common/Common.h>
 #include "../ViewComponent.h"
 #include <Core/OpenGL/Shader.h>
+#include <IKMvs/Config.h>
+
 namespace LUNA::Editor
 {
 
@@ -10,6 +12,8 @@ namespace LUNA::Editor
     {
     protected:
         KTKR::Ptr<LUNA::Shader> plyshader;
+        KTKR::MVS::Config _conf;
+        bool _conf_modified;
 
     public:
         virtual bool Enter();
