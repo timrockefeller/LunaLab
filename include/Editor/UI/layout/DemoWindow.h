@@ -9,12 +9,12 @@ namespace LUNA::Editor
     class DemoWindow : public ViewComponent
     {
     protected:
-        const ImVec4 clear_color = ImVec4(0.15f, 0.15f, 0.15f, 1.00f);
+        const ImVec4 clear_color = ImVec4(0.2f, 0.2f, 0.2f, 1.00f);
 
     public:
         virtual bool Enter()
         {
-            _GS<ImVec4>::getInstance()->Register("clear_color", ImVec4(0.15f, 0.15f, 0.15f, 1.00f));
+            _GS<ImVec4>::getInstance()->Register("clear_color", ImVec4(0.2f, 0.2f, 0.2f, 1.00f));
             _GS<int>::getInstance()->Register("pointsize", 5);
 
             _GS<bool>::getInstance()->Register("ply1", true);
